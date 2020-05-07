@@ -1,6 +1,6 @@
 name: flutter_strings_localization
 description: A flutter plugin to manage different locations files for your translates with supports for differents country codes and plurals.
-version: 1.0.0
+version: 1.0.1
 author: Sergio Dim3nsions
 homepage: https://github.com/SergioDim3nsions
 
