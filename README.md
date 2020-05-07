@@ -38,22 +38,22 @@ More info in [https://flutter.dev/docs/development/accessibility-and-localizatio
 
 ### iOS configuration
 
-Add the next permissions to info.plist (Remember selected the correct language code)
+Add the next permissions to info.plist with your language codes selected
 
 ```
 <key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+  <string>en</string>
 
 <key>CFBundleLocalizations</key>
-	<array>
-		<string>en</string>  <!-- English -->
-		<string>he</string>  <!-- Hebrew -->
-	</array>
+  <array>
+	<string>en</string>  <!-- English -->
+	<string>he</string>  <!-- Hebrew  -->
+  </array>
 ```
 
 ### Android configuration
 
-Anything to do! Great!
+Nothing to do! Great!
 
 ## Library Configuration
 
@@ -68,18 +68,29 @@ dependencies:
 
   # Another Awesome libreries
 
-  flutter_strings_localization: ^1.0.0
+  flutter_strings_localization: ^1.0.1
 ```
 
 ## How to use
 
-You will need create a individual file for each location. For example. if you want to have support for (English, Spanish and French) in your project, You will need to add 3 individual files.dart **_(strings_en.dart, strings_es.dart, strings_french.dart)_**
+You will need to create a individual file for each location. For example. if you want to have support for (English, Spanish and French) in your project, You will need to add 3 individual files.dart **_(strings_en.dart, strings_es.dart, strings_french.dart)_**
 
 **_Contry code is supported too_** and you can add different variations of english for example. **_en_US_** and **_ en_UK_**
 
-### 1. Create your first location file
+### 1. Create your StringsKey file
 
-Sample file for strings.en.dart
+```
+class  StringsKey {
+	static  final title =  "title";
+	static  final sampleWithoutParams =  "sampleWithoutParams";
+	static  final sampleWithParams =  "sampleWithParams";
+	static  final sampleWithPlurals =  "sampleWithPlurals";
+}
+```
+
+### 2. Create your first location file
+
+Sample file for strings_en.dart
 
 ```
 Map<String, Map<PluralsKey, String>> stringFileEN = {
@@ -106,7 +117,7 @@ Map<String, Map<PluralsKey, String>> stringFileEN = {
 **_PluralsKey_** is an enum used by the library with 4 options **_(none, zero, one, other)_**
 Please use **_.none_** for default strings without plurals because is called by default for the getString() method.
 
-**_@0_** is the easy way to replace the different parameters that you will send. there are not limit but always staring in @0 and continue with @1, @2, @3, @4. etc... this parameters are sending in a dynamic list.
+**_@0_** is the easy way to replace the different parameters that you will send. there are not limit but always start in @0 and continue with @1, @2, @3, @4. etc... this parameters are sending in a dynamic list.
 
 ### 2. Add your location file
 
@@ -131,17 +142,28 @@ void  main() {
 
 ### 3. Try and enjoy!
 
+**_Remember to do a hot restart when all things are installed _**
+
 You can call the TranslateManager to access the methods **_getString()_** and **_getPlurals()_**
 
 ```
-@override
-Widget  build(BuildContext context) {
-	final translateManager =  TranslateManager(context);
+class HomePage extends StatelessWidget {
+	const HomePage({Key key}) : super(key: key);
 
-return  Scaffold(
-	appBar:  AppBar(
-		title:  Text(translateManager.getString('your_key')),
-		),
-	);
+	@override
+	Widget build(BuildContext context) {
+		final translateManager = TranslateManager(context);
+		return Scaffold(
+			appBar: AppBar(
+				title: Text(translateManager.getString(StringsKey.title)),
+			),
+			body: Container(
+				child: Center(
+					child:
+						Text(translateManager.getString(StringsKey.sampleWithoutParams)),
+				),
+			),
+		);
+	}
 }
 ```

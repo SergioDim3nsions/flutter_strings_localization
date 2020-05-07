@@ -26,31 +26,31 @@ class TranslateManager {
   }
 
   String getString(String _stringKey, {List<dynamic> params}) {
-    final localeFile = getLocaleFile(_stringKey);
+    final localeFile = _getLocaleFile(_stringKey);
     if (localeFile == null) return '';
     return _replacePatternToParams(localeFile[PluralsKey.none], params);
   }
 
   String getPlurals(String _stringKey, int _quantity, {List<dynamic> params}) {
-    final PluralsKey _pluralsKey = getPluralsKey(_quantity);
-    final localeFile = getLocaleFile(_stringKey);
+    final PluralsKey _pluralsKey = _getPluralsKey(_quantity);
+    final localeFile = _getLocaleFile(_stringKey);
     if (localeFile == null) return '';
     return _replacePatternToParams(localeFile[_pluralsKey], params);
   }
 
-  String getLocaleKey() {
+  String _getLocaleKey() {
     return (_locale.countryCode == null)
         ? '${_locale.languageCode}'
         : '${_locale.languageCode}_${_locale.countryCode}';
   }
 
-  dynamic getLocaleFile(String _stringKey) {
-    final String _localeKey = getLocaleKey();
+  dynamic _getLocaleFile(String _stringKey) {
+    final String _localeKey = _getLocaleKey();
     final localeFile = _manageLocals.files[_localeKey][_stringKey] ?? null;
     return localeFile;
   }
 
-  PluralsKey getPluralsKey(int _quantity) {
+  PluralsKey _getPluralsKey(int _quantity) {
     switch (_quantity) {
       case 0:
         return PluralsKey.zero;
